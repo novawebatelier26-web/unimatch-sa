@@ -1,0 +1,1443 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07583e">
+
+<title>UniMatch SA | Your Future Starts Here</title>
+
+<meta name="description" content="UniMatch SA helps South Africans calculate APS, explore university courses, find bursaries and discover jobs and learnerships.">
+
+<style>
+:root {
+  --green:#006747;
+  --dark:#063c2d;
+  --gold:#ffbd35;
+  --white:#ffffff;
+  --background:#f5f7f8;
+  --text:#172231;
+  --grey:#6b7280;
+  --border:#e3e8e9;
+}
+
+* {
+  box-sizing:border-box;
+}
+
+html {
+  scroll-behavior:smooth;
+}
+
+body {
+  margin:0;
+  background:var(--background);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+  line-height:1.55;
+}
+
+button,input,select {
+  font:inherit;
+}
+
+button {
+  cursor:pointer;
+}
+
+a {
+  text-decoration:none;
+  color:inherit;
+}
+
+.container {
+  max-width:1150px;
+  margin:auto;
+  padding:0 18px;
+}
+
+header {
+  background:white;
+  position:sticky;
+  top:0;
+  z-index:100;
+  box-shadow:0 2px 12px #00000010;
+}
+
+.header-inner {
+  min-height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.logo {
+  font-size:25px;
+  font-weight:900;
+  color:var(--green);
+  white-space:nowrap;
+}
+
+.logo span {
+  color:var(--gold);
+}
+
+nav {
+  display:flex;
+  align-items:center;
+  gap:18px;
+  flex-wrap:wrap;
+  font-size:13px;
+  font-weight:bold;
+}
+
+nav a:hover {
+  color:var(--green);
+}
+
+.signin {
+  background:var(--green);
+  color:white;
+  border:0;
+  border-radius:25px;
+  padding:10px 16px;
+}
+
+.hero {
+  position:relative;
+  min-height:590px;
+  display:flex;
+  align-items:center;
+  color:white;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(3,43,31,.94),
+      rgba(3,43,31,.72),
+      rgba(3,43,31,.35)
+    ),
+    url("unimatch-hero.jpg") center/cover,
+    #07583e;
+}
+
+.hero-content {
+  padding:85px 0;
+  max-width:780px;
+}
+
+.pill {
+  display:inline-block;
+  background:#ffffff1d;
+  border:1px solid #ffffff30;
+  border-radius:30px;
+  padding:10px 20px;
+  color:var(--gold);
+  font-weight:bold;
+}
+
+.hero h1 {
+  font-size:clamp(43px,7vw,76px);
+  line-height:1.08;
+  margin:25px 0;
+}
+
+.hero h1 span {
+  color:var(--gold);
+}
+
+.hero p {
+  font-size:19px;
+  color:#e2eee8;
+  max-width:600px;
+}
+
+.btn {
+  display:inline-block;
+  background:var(--green);
+  color:white;
+  padding:14px 22px;
+  border:0;
+  border-radius:12px;
+  font-weight:bold;
+  text-align:center;
+}
+
+.btn.gold {
+  background:var(--gold);
+  color:var(--dark);
+}
+
+.btn.outline {
+  background:transparent;
+  border:1px solid white;
+}
+
+.hero-buttons {
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:28px;
+}
+
+section {
+  padding:65px 0;
+}
+
+.section-title {
+  text-align:center;
+  font-size:34px;
+  margin:0 0 10px;
+}
+
+.section-subtitle {
+  color:var(--grey);
+  text-align:center;
+  margin:0 0 35px;
+}
+
+.grid {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:17px;
+}
+
+.card {
+  background:white;
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:25px;
+  box-shadow:0 3px 12px #00000008;
+}
+
+.card h3 {
+  margin:10px 0;
+}
+
+.card p {
+  color:var(--grey);
+  font-size:14px;
+}
+
+.card-icon {
+  width:58px;
+  height:58px;
+  display:grid;
+  place-items:center;
+  background:#e3f3ec;
+  color:var(--green);
+  font-size:28px;
+  border-radius:16px;
+}
+
+.card .btn {
+  width:100%;
+  margin-top:12px;
+  font-size:13px;
+}
+
+.panel {
+  max-width:820px;
+  margin:auto;
+  background:white;
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:28px;
+}
+
+label {
+  display:block;
+  font-weight:bold;
+  margin:13px 0 6px;
+}
+
+input,select {
+  width:100%;
+  padding:13px;
+  border:1px solid #d5dce0;
+  border-radius:10px;
+  background:white;
+}
+
+.subject-row {
+  display:grid;
+  grid-template-columns:1fr 115px;
+  gap:12px;
+  align-items:end;
+}
+
+.result {
+  display:none;
+  margin-top:23px;
+  background:#e7f5ee;
+  border:1px solid #b8dec9;
+  padding:22px;
+  border-radius:15px;
+}
+
+.result strong {
+  color:var(--green);
+  font-size:35px;
+}
+
+.notice {
+  padding:15px;
+  background:#fff8e7;
+  border:1px solid #f5d992;
+  border-radius:12px;
+  font-size:13px;
+  margin-top:20px;
+}
+
+.search-area {
+  display:grid;
+  grid-template-columns:1fr 200px;
+  gap:12px;
+  margin-bottom:25px;
+}
+
+.listing-grid {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
+}
+
+.listing {
+  background:white;
+  border:1px solid var(--border);
+  border-radius:17px;
+  padding:23px;
+}
+
+.listing h3 {
+  margin:8px 0;
+}
+
+.listing p {
+  color:var(--grey);
+  font-size:14px;
+}
+
+.status {
+  display:inline-block;
+  border-radius:30px;
+  padding:5px 12px;
+  font-size:11px;
+  font-weight:bold;
+  background:#fff2d9;
+  color:#915900;
+}
+
+.status.open {
+  background:#def5e6;
+  color:#087442;
+}
+
+.status.closed {
+  background:#fde8e8;
+  color:#b42318;
+}
+
+.listing .btn {
+  margin-top:15px;
+  width:100%;
+}
+
+.salary {
+  color:var(--green);
+  font-weight:bold;
+}
+
+.pricing {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+  max-width:850px;
+  margin:auto;
+}
+
+.price-card {
+  background:white;
+  padding:30px;
+  border-radius:20px;
+  border:1px solid var(--border);
+}
+
+.price-card.premium {
+  border:2px solid var(--gold);
+}
+
+.price {
+  font-size:44px;
+  font-weight:900;
+  color:var(--green);
+}
+
+.price small {
+  font-size:15px;
+  color:var(--grey);
+}
+
+.price-card ul {
+  padding-left:20px;
+  line-height:2.1;
+}
+
+.price-card .btn {
+  width:100%;
+}
+
+.dark-section {
+  background:var(--dark);
+  color:white;
+}
+
+.dark-section .section-subtitle {
+  color:#c5d6ce;
+}
+
+.steps {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+  text-align:center;
+}
+
+.step-number {
+  background:var(--gold);
+  color:var(--dark);
+  width:48px;
+  height:48px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  margin:auto;
+  font-weight:bold;
+}
+
+footer {
+  background:#032e22;
+  color:white;
+  text-align:center;
+  padding:35px 18px;
+}
+
+footer p {
+  color:#bed2c8;
+  font-size:13px;
+}
+
+.hidden {
+  display:none!important;
+}
+
+@media(max-width:800px) {
+  .grid,.steps {
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .listing-grid,.pricing {
+    grid-template-columns:1fr;
+  }
+
+  nav {
+    gap:10px;
+  }
+}
+
+@media(max-width:520px) {
+  .header-inner {
+    flex-wrap:wrap;
+    padding:12px 0;
+  }
+
+  .logo {
+    font-size:22px;
+  }
+
+  nav {
+    width:100%;
+    justify-content:space-between;
+    font-size:11px;
+  }
+
+  .hero {
+    min-height:570px;
+  }
+
+  .hero-content {
+    padding:65px 0;
+  }
+
+  .grid {
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+  }
+
+  .card {
+    padding:16px;
+  }
+
+  .card h3 {
+    font-size:16px;
+  }
+
+  .card-icon {
+    width:45px;
+    height:45px;
+    font-size:23px;
+  }
+
+  .search-area {
+    grid-template-columns:1fr;
+  }
+
+  .panel {
+    padding:18px;
+  }
+
+  .subject-row {
+    grid-template-columns:1fr 90px;
+  }
+
+  .section-title {
+    font-size:28px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="container header-inner">
+
+    <a href="#home" class="logo">
+      UniMatch <span>SA</span>
+    </a>
+
+    <nav>
+      <a href="#aps">APS</a>
+      <a href="#courses">Courses</a>
+      <a href="#bursaries">Bursaries</a>
+      <a href="#jobs">Jobs</a>
+      <a href="#pricing">Premium</a>
+    </nav>
+
+    <button class="signin" onclick="accountNotice()">
+      Sign In
+    </button>
+
+  </div>
+</header>
+
+<main>
+
+<section class="hero" id="home">
+  <div class="container">
+
+    <div class="hero-content">
+
+      <div class="pill">
+        🇿🇦 MADE FOR SOUTH AFRICAN STUDENTS
+      </div>
+
+      <h1>
+        Welcome to<br>
+        UniMatch <span>SA</span>
+      </h1>
+
+      <p>
+        Your future. Your opportunities. One place.
+      </p>
+
+      <p>
+        Calculate your APS, discover university courses,
+        find bursaries and explore jobs across South Africa.
+      </p>
+
+      <div class="hero-buttons">
+
+        <a href="#aps" class="btn gold">
+          Calculate My APS →
+        </a>
+
+        <a href="#features" class="btn outline">
+          Explore Opportunities
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<section id="features">
+  <div class="container">
+
+    <h2 class="section-title">What would you like to do?</h2>
+
+    <p class="section-subtitle">
+      Choose where your journey begins.
+    </p>
+
+    <div class="grid">
+
+      <div class="card">
+        <div class="card-icon">🧮</div>
+        <h3>APS Calculator</h3>
+        <p>Enter your marks and calculate your APS.</p>
+        <a href="#aps" class="btn">Calculate APS</a>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🎓</div>
+        <h3>Find Courses</h3>
+        <p>Explore universities and course information.</p>
+        <a href="#courses" class="btn">Find Courses</a>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">💰</div>
+        <h3>Find Bursaries</h3>
+        <p>Find funding and check official applications.</p>
+        <a href="#bursaries" class="btn">Find Bursaries</a>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">💼</div>
+        <h3>Find Jobs</h3>
+        <p>Explore jobs and learnership opportunities.</p>
+        <a href="#jobs" class="btn">Find Jobs</a>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<section id="aps">
+  <div class="container">
+
+    <h2 class="section-title">Calculate Your APS</h2>
+
+    <p class="section-subtitle">
+      Enter your seven school subjects and marks.
+    </p>
+
+    <div class="panel">
+
+      <div class="notice" style="margin-top:0">
+        This calculator uses the standard seven-level NSC
+        points scale and excludes Life Orientation from
+        the six-subject total. Universities can use
+        different APS rules. Always check your chosen
+        university's official requirements.
+      </div>
+
+      <form id="apsForm">
+
+        <div id="subjectInputs"></div>
+
+        <button type="submit"
+                class="btn gold"
+                style="width:100%;margin-top:22px">
+          Calculate My APS
+        </button>
+
+      </form>
+
+      <div class="result" id="apsResult">
+        <div>Your estimated APS</div>
+        <strong id="apsScore">0</strong>
+        <p id="apsMessage"></p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<section id="courses">
+  <div class="container">
+
+    <h2 class="section-title">Course Finder</h2>
+
+    <p class="section-subtitle">
+      Explore universities and visit their official course pages.
+    </p>
+
+    <div class="search-area">
+
+      <input
+        id="courseSearch"
+        type="search"
+        placeholder="Search universities or courses..."
+        aria-label="Search universities or courses"
+      >
+
+      <select id="courseProvince" aria-label="Filter university province">
+        <option value="all">All Provinces</option>
+        <option value="Gauteng">Gauteng</option>
+        <option value="Limpopo">Limpopo</option>
+        <option value="Western Cape">Western Cape</option>
+        <option value="KwaZulu-Natal">KwaZulu-Natal</option>
+        <option value="Free State">Free State</option>
+        <option value="Eastern Cape">Eastern Cape</option>
+        <option value="North West">North West</option>
+        <option value="Mpumalanga">Mpumalanga</option>
+        <option value="Northern Cape">Northern Cape</option>
+      </select>
+
+    </div>
+
+    <div class="listing-grid" id="courseResults"></div>
+
+    <div class="notice">
+      Course admission requirements, APS thresholds, application
+      dates and availability must be confirmed on the official
+      university website. An APS score alone does not guarantee
+      admission. Salary estimates will only be displayed when
+      supported by a suitable source.
+    </div>
+
+  </div>
+</section>
+
+<section id="bursaries">
+  <div class="container">
+
+    <h2 class="section-title">Bursary Finder</h2>
+
+    <p class="section-subtitle">
+      Explore funding providers and check their official websites.
+    </p>
+
+    <div class="listing-grid" id="bursaryResults"></div>
+
+  </div>
+</section>
+
+<section id="jobs">
+  <div class="container">
+
+    <h2 class="section-title">
+      Jobs & Learnership Finder
+    </h2>
+
+    <p class="section-subtitle">
+      Find opportunities across South Africa.
+    </p>
+
+    <div class="search-area">
+
+      <input
+        id="jobSearch"
+        type="search"
+        placeholder="Search jobs or providers..."
+        aria-label="Search jobs"
+      >
+
+      <select id="jobProvince" aria-label="Filter job province">
+        <option value="all">All Provinces</option>
+        <option>Gauteng</option>
+        <option>Limpopo</option>
+        <option>Mpumalanga</option>
+        <option>North West</option>
+        <option>Free State</option>
+        <option>KwaZulu-Natal</option>
+        <option>Eastern Cape</option>
+        <option>Western Cape</option>
+        <option>Northern Cape</option>
+      </select>
+
+    </div>
+
+    <div class="listing-grid" id="jobResults"></div>
+
+    <div class="notice">
+      We do not charge people to apply for jobs.
+      Only verified individual vacancies will be labelled Open.
+      Advertised salaries will be shown when supplied by the
+      original employer.
+    </div>
+
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="container">
+
+    <h2 class="section-title">Choose Your Plan</h2>
+
+    <p class="section-subtitle">
+      Start free. Upgrade when you need more.
+    </p>
+
+    <div class="pricing">
+
+      <div class="price-card">
+
+        <h3>UniMatch Free</h3>
+
+        <div class="price">
+          R0 <small>/ forever</small>
+        </div>
+
+        <ul>
+          <li>APS Calculator</li>
+          <li>Explore courses</li>
+          <li>Find bursaries</li>
+          <li>Find jobs</li>
+          <li>Official application links</li>
+          <li>Advertisements may appear</li>
+        </ul>
+
+        <a href="#aps" class="btn">
+          Start Free
+        </a>
+
+      </div>
+
+      <div class="price-card premium">
+
+        <div class="pill"
+             style="background:var(--dark);color:var(--gold)">
+          PREMIUM PLAN
+        </div>
+
+        <h3>UniMatch Premium</h3>
+
+        <div class="price">
+          R150 <small>/ year</small>
+        </div>
+
+        <ul>
+          <li>Everything in Free</li>
+          <li>Ad-free experience</li>
+          <li>Private saved profile</li>
+          <li>Saved opportunities</li>
+          <li>Application reminders</li>
+          <li>Extra matching features</li>
+        </ul>
+
+        <button class="btn gold"
+                onclick="premiumNotice()">
+          Premium Coming Soon
+        </button>
+
+        <p style="font-size:12px;color:var(--grey)">
+          Payments are not active yet. No money is collected
+          through this page.
+        </p>
+
+      </div>
+
+    </div>
+
+    <div class="notice"
+         style="max-width:850px;margin:25px auto 0">
+      UniMatch SA will keep official application links accessible
+      to free users. Premium is optional and will be activated
+      only after secure accounts and payments are connected.
+    </div>
+
+  </div>
+</section>
+
+<section class="dark-section">
+  <div class="container">
+
+    <h2 class="section-title">How UniMatch SA Works</h2>
+
+    <p class="section-subtitle">
+      Four steps towards your next opportunity.
+    </p>
+
+    <div class="steps">
+
+      <div>
+        <div class="step-number">1</div>
+        <h3>Enter Marks</h3>
+        <p>Calculate your APS.</p>
+      </div>
+
+      <div>
+        <div class="step-number">2</div>
+        <h3>Explore</h3>
+        <p>Find courses, bursaries and jobs.</p>
+      </div>
+
+      <div>
+        <div class="step-number">3</div>
+        <h3>Check Status</h3>
+        <p>View verified application information.</p>
+      </div>
+
+      <div>
+        <div class="step-number">4</div>
+        <h3>Apply Directly</h3>
+        <p>Continue on the original provider's website.</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+
+  <div class="logo" style="color:white">
+    UniMatch <span>SA</span>
+  </div>
+
+  <p>
+    Your future. Your opportunities. One place.
+  </p>
+
+  <p>
+    Made for South Africa 🇿🇦
+  </p>
+
+  <p>
+    UniMatch SA is an independent information platform.
+    We are not affiliated with the universities,
+    employers or funding providers listed.
+  </p>
+
+  <p>
+    © <span id="year"></span> UniMatch SA.
+    All rights reserved.
+  </p>
+
+</footer>
+
+<script>
+
+/* ==========================================
+   APS CALCULATOR
+========================================== */
+
+const subjectNames = [
+  "Home Language",
+  "First Additional Language",
+  "Mathematics / Mathematical Literacy",
+  "Subject 4",
+  "Subject 5",
+  "Subject 6",
+  "Life Orientation"
+];
+
+const subjectContainer =
+  document.getElementById("subjectInputs");
+
+subjectNames.forEach((name,index) => {
+
+  const row = document.createElement("div");
+
+  row.className = "subject-row";
+
+  row.innerHTML = `
+    <div>
+      <label for="subject${index}">
+        ${name}
+      </label>
+      <input
+        id="subject${index}"
+        type="text"
+        value="${index < 3 || index === 6 ? name : ""}"
+        placeholder="Enter subject name"
+        required
+      >
+    </div>
+
+    <div>
+      <label for="mark${index}">
+        Mark %
+      </label>
+      <input
+        id="mark${index}"
+        type="number"
+        min="0"
+        max="100"
+        step="1"
+        placeholder="0-100"
+        required
+      >
+    </div>
+  `;
+
+  subjectContainer.appendChild(row);
+
+});
+
+function markToPoints(mark) {
+
+  if(mark >= 80) return 7;
+  if(mark >= 70) return 6;
+  if(mark >= 60) return 5;
+  if(mark >= 50) return 4;
+  if(mark >= 40) return 3;
+  if(mark >= 30) return 2;
+
+  return 1;
+}
+
+document.getElementById("apsForm")
+.addEventListener("submit",function(event) {
+
+  event.preventDefault();
+
+  let total = 0;
+
+  for(let i=0;i<7;i++) {
+
+    const mark =
+      Number(document.getElementById("mark"+i).value);
+
+    if(
+      !Number.isFinite(mark) ||
+      mark < 0 ||
+      mark > 100
+    ) {
+      alert("Please enter valid marks between 0 and 100.");
+      return;
+    }
+
+    // Life Orientation is excluded from this
+    // six-subject example calculation.
+
+    if(i !== 6) {
+      total += markToPoints(mark);
+    }
+
+  }
+
+  document.getElementById("apsScore").textContent =
+    total + " / 42";
+
+  document.getElementById("apsMessage").textContent =
+    "This is your estimated six-subject NSC APS. " +
+    "Different universities may calculate APS differently. " +
+    "Check official course requirements before applying.";
+
+  document.getElementById("apsResult").style.display =
+    "block";
+
+  document.getElementById("apsResult")
+    .scrollIntoView({behavior:"smooth",block:"center"});
+
+});
+
+/* ==========================================
+   COURSE DIRECTORY
+
+   These are official university entry points,
+   not invented individual course listings.
+========================================== */
+
+const universities = [
+
+  {
+    name:"University of Pretoria",
+    province:"Gauteng",
+    description:"Explore qualifications and official admissions information.",
+    url:"https://www.up.ac.za/"
+  },
+
+  {
+    name:"University of Johannesburg",
+    province:"Gauteng",
+    description:"Find programmes, entry requirements and application information.",
+    url:"https://www.uj.ac.za/"
+  },
+
+  {
+    name:"Tshwane University of Technology",
+    province:"Gauteng",
+    description:"Explore diplomas, degrees and official admission information.",
+    url:"https://www.tut.ac.za/"
+  },
+
+  {
+    name:"University of South Africa",
+    province:"Gauteng",
+    description:"Explore distance-learning qualifications and admissions.",
+    url:"https://www.unisa.ac.za/"
+  },
+
+  {
+    name:"University of Limpopo",
+    province:"Limpopo",
+    description:"Find qualifications and university application information.",
+    url:"https://www.ul.ac.za/"
+  },
+
+  {
+    name:"University of Cape Town",
+    province:"Western Cape",
+    description:"Explore official undergraduate study information.",
+    url:"https://www.uct.ac.za/"
+  },
+
+  {
+    name:"Stellenbosch University",
+    province:"Western Cape",
+    description:"Explore programmes and official admission requirements.",
+    url:"https://www.sun.ac.za/"
+  },
+
+  {
+    name:"University of KwaZulu-Natal",
+    province:"KwaZulu-Natal",
+    description:"Find qualifications and application information.",
+    url:"https://www.ukzn.ac.za/"
+  },
+
+  {
+    name:"University of the Free State",
+    province:"Free State",
+    description:"Explore courses and official admissions.",
+    url:"https://www.ufs.ac.za/"
+  },
+
+  {
+    name:"Nelson Mandela University",
+    province:"Eastern Cape",
+    description:"Explore qualifications and admissions information.",
+    url:"https://www.mandela.ac.za/"
+  },
+
+  {
+    name:"North-West University",
+    province:"North West",
+    description:"Explore qualifications and application information.",
+    url:"https://www.nwu.ac.za/"
+  },
+
+  {
+    name:"University of Mpumalanga",
+    province:"Mpumalanga",
+    description:"Find programmes and admission information.",
+    url:"https://www.ump.ac.za/"
+  },
+
+  {
+    name:"Sol Plaatje University",
+    province:"Northern Cape",
+    description:"Explore qualifications and official admissions.",
+    url:"https://www.spu.ac.za/"
+  }
+
+];
+
+function safeText(value) {
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#39;");
+}
+
+function renderCourses() {
+
+  const search =
+    document.getElementById("courseSearch")
+    .value.toLowerCase().trim();
+
+  const province =
+    document.getElementById("courseProvince").value;
+
+  const filtered = universities.filter(item => {
+
+    const matchesSearch =
+      item.name.toLowerCase().includes(search) ||
+      item.description.toLowerCase().includes(search);
+
+    const matchesProvince =
+      province === "all" ||
+      item.province === province;
+
+    return matchesSearch && matchesProvince;
+
+  });
+
+  document.getElementById("courseResults").innerHTML =
+    filtered.map(item => `
+
+      <article class="listing">
+
+        <span class="status">
+          APPLICATION STATUS: CHECK OFFICIAL SITE
+        </span>
+
+        <h3>${safeText(item.name)}</h3>
+
+        <p>📍 ${safeText(item.province)}</p>
+
+        <p>${safeText(item.description)}</p>
+
+        <p>
+          <strong>APS:</strong>
+          Depends on the selected qualification.
+        </p>
+
+        <p>
+          <strong>Required subjects:</strong>
+          Check the official programme information.
+        </p>
+
+        <p>
+          <strong>Estimated career salary:</strong>
+          Depends on the qualification and career.
+        </p>
+
+        <a
+          class="btn"
+          href="${item.url}"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Visit Official University ↗
+        </a>
+
+      </article>
+
+    `).join("") ||
+    "<p>No matching universities found.</p>";
+
+}
+
+document.getElementById("courseSearch")
+  .addEventListener("input",renderCourses);
+
+document.getElementById("courseProvince")
+  .addEventListener("change",renderCourses);
+
+/* ==========================================
+   BURSARY DIRECTORY
+
+   Status is unverified until a specific
+   funding round has been checked.
+========================================== */
+
+const bursaries = [
+
+  {
+    name:"NSFAS",
+    description:"Explore financial assistance for eligible students.",
+    url:"https://www.nsfas.org.za/"
+  },
+
+  {
+    name:"Funza Lushaka",
+    description:"Explore the official teaching bursary programme.",
+    url:"https://www.funzalushaka.doe.gov.za/"
+  },
+
+  {
+    name:"National Research Foundation",
+    description:"Explore funding and research opportunities.",
+    url:"https://www.nrf.ac.za/"
+  }
+
+];
+
+function renderBursaries() {
+
+  document.getElementById("bursaryResults").innerHTML =
+    bursaries.map(item => `
+
+      <article class="listing">
+
+        <span class="status">
+          STATUS: CHECK OFFICIAL SITE
+        </span>
+
+        <h3>${safeText(item.name)}</h3>
+
+        <p>${safeText(item.description)}</p>
+
+        <p>
+          Requirements, deadlines and available funding
+          depend on the current application round.
+        </p>
+
+        <a
+          href="${item.url}"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn"
+        >
+          Visit Official Provider ↗
+        </a>
+
+      </article>
+
+    `).join("");
+
+}
+
+/* ==========================================
+   JOB RESOURCE DIRECTORY
+
+   Individual vacancies will be added after
+   their employer, salary, deadline and
+   application URL have been checked.
+========================================== */
+
+const jobResources = [
+
+  {
+    name:"SAYouth",
+    description:"Explore youth employment and learning opportunities.",
+    province:"all",
+    url:"https://sayouth.mobi/"
+  },
+
+  {
+    name:"Harambee Youth Employment Accelerator",
+    description:"Explore youth employment support and opportunities.",
+    province:"all",
+    url:"https://www.harambee.co.za/"
+  },
+
+  {
+    name:"South African Government",
+    description:"Find official public-sector vacancy information.",
+    province:"all",
+    url:"https://www.gov.za/"
+  },
+
+  {
+    name:"Indeed South Africa",
+    description:"Search job advertisements and check employer details.",
+    province:"all",
+    url:"https://za.indeed.com/"
+  }
+
+];
+
+function renderJobs() {
+
+  const search =
+    document.getElementById("jobSearch")
+      .value.toLowerCase().trim();
+
+  const province =
+    document.getElementById("jobProvince").value;
+
+  const filtered = jobResources.filter(item => {
+
+    const matchesSearch =
+      item.name.toLowerCase().includes(search) ||
+      item.description.toLowerCase().includes(search);
+
+    const matchesProvince =
+      province === "all" ||
+      item.province === "all" ||
+      item.province === province;
+
+    return matchesSearch && matchesProvince;
+
+  });
+
+  document.getElementById("jobResults").innerHTML =
+    filtered.map(item => `
+
+      <article class="listing">
+
+        <span class="status">
+          CHECK CURRENT VACANCIES
+        </span>
+
+        <h3>${safeText(item.name)}</h3>
+
+        <p>${safeText(item.description)}</p>
+
+        <p>
+          <strong>Location:</strong>
+          Search across South Africa.
+        </p>
+
+        <p>
+          <strong>Requirements:</strong>
+          Depend on the individual vacancy.
+        </p>
+
+        <p class="salary">
+          Monthly salary:
+          Check the original job advertisement.
+        </p>
+
+        <a
+          href="${item.url}"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn"
+        >
+          Find Opportunities ↗
+        </a>
+
+      </article>
+
+    `).join("") ||
+    "<p>No matching resources found.</p>";
+
+}
+
+document.getElementById("jobSearch")
+  .addEventListener("input",renderJobs);
+
+document.getElementById("jobProvince")
+  .addEventListener("change",renderJobs);
+
+/* ==========================================
+   ACCOUNTS AND PREMIUM
+
+   These are intentionally not fake login
+   or payment systems. A secure backend
+   must be connected before activation.
+========================================== */
+
+function accountNotice() {
+
+  alert(
+    "Private UniMatch SA accounts are being prepared. " +
+    "Secure sign-up and sign-in will be activated " +
+    "when the account system is connected."
+  );
+
+}
+
+function premiumNotice() {
+
+  alert(
+    "UniMatch Premium will cost R150 per year. " +
+    "Secure payments are not active yet. " +
+    "You have not been charged."
+  );
+
+}
+
+/* ==========================================
+   INITIALISE
+========================================== */
+
+document.getElementById("year").textContent =
+  new Date().getFullYear();
+
+renderCourses();
+renderBursaries();
+renderJobs();
+
+</script>
+
+</body>
+</html>
