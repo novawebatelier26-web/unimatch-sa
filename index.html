@@ -28,6 +28,7 @@
 
 html {
   scroll-behavior:smooth;
+  scroll-padding-top:115px;
 }
 
 body {
@@ -44,6 +45,11 @@ button,input,select {
 
 button {
   cursor:pointer;
+}
+
+button:disabled {
+  opacity:.6;
+  cursor:wait;
 }
 
 a {
@@ -433,6 +439,98 @@ footer p {
   display:none!important;
 }
 
+/* ACCOUNT WINDOW */
+
+.auth-overlay {
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  background:rgba(0,25,18,.8);
+  padding:16px;
+  overflow-y:auto;
+  align-items:center;
+  justify-content:center;
+}
+
+.auth-overlay.active {
+  display:flex;
+}
+
+.auth-box {
+  background:white;
+  color:var(--text);
+  width:100%;
+  max-width:440px;
+  max-height:calc(100dvh - 32px);
+  overflow-y:auto;
+  border-radius:22px;
+  padding:25px;
+  position:relative;
+}
+
+.auth-box h2 {
+  margin:0 35px 5px 0;
+  color:var(--dark);
+}
+
+.auth-box p {
+  color:var(--grey);
+  font-size:14px;
+}
+
+.close-auth {
+  position:absolute;
+  right:15px;
+  top:13px;
+  background:#eef2ef;
+  border:0;
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  font-size:22px;
+}
+
+.auth-tabs {
+  display:flex;
+  gap:10px;
+  margin-top:20px;
+}
+
+.auth-tabs button {
+  flex:1;
+  border:1px solid var(--border);
+  background:#f5f7f8;
+  border-radius:10px;
+  padding:12px;
+  font-weight:bold;
+}
+
+.auth-tabs button.active {
+  background:var(--green);
+  color:white;
+}
+
+.auth-message {
+  display:none;
+  margin-top:15px;
+  padding:13px;
+  border-radius:10px;
+  background:#e7f5ee;
+  color:#07583e;
+  font-size:14px;
+  overflow-wrap:anywhere;
+}
+
+.auth-message.error {
+  background:#fde8e8;
+  color:#a02020;
+}
+
+.profile-panel {
+  max-width:650px;
+}
+
 @media(max-width:800px) {
   .grid,.steps {
     grid-template-columns:repeat(2,1fr);
@@ -507,6 +605,9 @@ footer p {
   }
 }
 </style>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
+
 </head>
 
 <body>
@@ -526,12 +627,129 @@ footer p {
       <a href="#pricing">Premium</a>
     </nav>
 
-    <button class="signin" onclick="accountNotice()">
+    <button class="signin" id="accountButton" type="button">
       Sign In
     </button>
 
   </div>
 </header>
+
+<!-- REAL STUDENT REGISTRATION AND LOGIN -->
+
+<div class="auth-overlay" id="authOverlay">
+
+  <div
+    class="auth-box"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="authTitle"
+  >
+
+    <button
+      class="close-auth"
+      id="closeAuth"
+      type="button"
+      aria-label="Close"
+    >×</button>
+
+    <h2 id="authTitle">Welcome to UniMatch SA</h2>
+
+    <p>Create your free student account or sign in.</p>
+
+    <div class="auth-tabs">
+
+      <button type="button" id="loginTab" class="active">
+        Sign In
+      </button>
+
+      <button type="button" id="signupTab">
+        Register
+      </button>
+
+    </div>
+
+    <form id="authForm">
+
+      <div id="signupFields" class="hidden">
+
+        <label for="signupName">Full Name</label>
+
+        <input
+          id="signupName"
+          type="text"
+          maxlength="100"
+          autocomplete="name"
+          placeholder="Your full name"
+        >
+
+        <label for="signupProvince">Province</label>
+
+        <select id="signupProvince">
+          <option value="">Select your province</option>
+          <option>Gauteng</option>
+          <option>Limpopo</option>
+          <option>Mpumalanga</option>
+          <option>North West</option>
+          <option>Free State</option>
+          <option>KwaZulu-Natal</option>
+          <option>Eastern Cape</option>
+          <option>Western Cape</option>
+          <option>Northern Cape</option>
+        </select>
+
+      </div>
+
+      <label for="authEmail">Email Address</label>
+
+      <input
+        id="authEmail"
+        type="email"
+        autocomplete="email"
+        placeholder="you@example.com"
+        required
+      >
+
+      <label for="authPassword">Password</label>
+
+      <input
+        id="authPassword"
+        type="password"
+        minlength="8"
+        autocomplete="current-password"
+        placeholder="At least 8 characters"
+        required
+      >
+
+      <p id="passwordHint" class="hidden">
+        Use a password with at least 8 characters.
+        Never share your password with anyone.
+      </p>
+
+      <button
+        id="authSubmit"
+        class="btn"
+        type="submit"
+        style="width:100%;margin-top:20px"
+      >
+        Sign In
+      </button>
+
+    </form>
+
+    <div
+      id="authMessage"
+      class="auth-message"
+      role="status"
+      aria-live="polite"
+    ></div>
+
+    <p style="text-align:center">
+      Your account is free. Premium payments are not active.
+    </p>
+
+  </div>
+
+</div>
 
 <main>
 
@@ -569,6 +787,82 @@ footer p {
         </a>
 
       </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- PRIVATE PROFILE -->
+
+<section id="studentAccount" class="hidden">
+  <div class="container">
+
+    <h2 class="section-title">My UniMatch Account</h2>
+
+    <p class="section-subtitle" id="welcomeStudent">
+      Welcome!
+    </p>
+
+    <div class="panel profile-panel">
+
+      <h3>My Private Profile</h3>
+
+      <p id="accountEmail"></p>
+
+      <form id="profileForm">
+
+        <label for="profileName">Full Name</label>
+
+        <input
+          id="profileName"
+          type="text"
+          maxlength="100"
+          autocomplete="name"
+          required
+        >
+
+        <label for="profileProvince">Province</label>
+
+        <select id="profileProvince" required>
+          <option value="">Select Province</option>
+          <option>Gauteng</option>
+          <option>Limpopo</option>
+          <option>Mpumalanga</option>
+          <option>North West</option>
+          <option>Free State</option>
+          <option>KwaZulu-Natal</option>
+          <option>Eastern Cape</option>
+          <option>Western Cape</option>
+          <option>Northern Cape</option>
+        </select>
+
+        <button
+          class="btn"
+          type="submit"
+          id="saveProfileButton"
+          style="width:100%;margin-top:20px"
+        >
+          Save My Profile
+        </button>
+
+      </form>
+
+      <div
+        class="auth-message"
+        id="profileMessage"
+        role="status"
+        aria-live="polite"
+      ></div>
+
+      <button
+        id="logoutButton"
+        type="button"
+        class="btn"
+        style="width:100%;margin-top:15px;background:#a52b2b"
+      >
+        Sign Out
+      </button>
 
     </div>
 
@@ -642,9 +936,11 @@ footer p {
 
         <div id="subjectInputs"></div>
 
-        <button type="submit"
-                class="btn gold"
-                style="width:100%;margin-top:22px">
+        <button
+          type="submit"
+          class="btn gold"
+          style="width:100%;margin-top:22px"
+        >
           Calculate My APS
         </button>
 
@@ -804,8 +1100,10 @@ footer p {
 
       <div class="price-card premium">
 
-        <div class="pill"
-             style="background:var(--dark);color:var(--gold)">
+        <div
+          class="pill"
+          style="background:var(--dark);color:var(--gold)"
+        >
           PREMIUM PLAN
         </div>
 
@@ -817,15 +1115,18 @@ footer p {
 
         <ul>
           <li>Everything in Free</li>
-          <li>Ad-free experience</li>
+          <li>Ad-free experience (planned)</li>
           <li>Private saved profile</li>
-          <li>Saved opportunities</li>
-          <li>Application reminders</li>
-          <li>Extra matching features</li>
+          <li>Saved opportunities (planned)</li>
+          <li>Application reminders (planned)</li>
+          <li>Extra matching features (planned)</li>
         </ul>
 
-        <button class="btn gold"
-                onclick="premiumNotice()">
+        <button
+          class="btn gold"
+          type="button"
+          onclick="premiumNotice()"
+        >
           Premium Coming Soon
         </button>
 
@@ -838,8 +1139,10 @@ footer p {
 
     </div>
 
-    <div class="notice"
-         style="max-width:850px;margin:25px auto 0">
+    <div
+      class="notice"
+      style="max-width:850px;margin:25px auto 0"
+    >
       UniMatch SA will keep official application links accessible
       to free users. Premium is optional and will be activated
       only after secure accounts and payments are connected.
@@ -874,7 +1177,7 @@ footer p {
       <div>
         <div class="step-number">3</div>
         <h3>Check Status</h3>
-        <p>View verified application information.</p>
+        <p>View official application information.</p>
       </div>
 
       <div>
@@ -900,9 +1203,7 @@ footer p {
     Your future. Your opportunities. One place.
   </p>
 
-  <p>
-    Made for South Africa 🇿🇦
-  </p>
+  <p>Made for South Africa 🇿🇦</p>
 
   <p>
     UniMatch SA is an independent information platform.
@@ -1009,8 +1310,7 @@ document.getElementById("apsForm")
       return;
     }
 
-    // Life Orientation is excluded from this
-    // six-subject example calculation.
+    // Life Orientation is excluded.
 
     if(i !== 6) {
       total += markToPoints(mark);
@@ -1036,9 +1336,6 @@ document.getElementById("apsForm")
 
 /* ==========================================
    COURSE DIRECTORY
-
-   These are official university entry points,
-   not invented individual course listings.
 ========================================== */
 
 const universities = [
@@ -1222,9 +1519,6 @@ document.getElementById("courseProvince")
 
 /* ==========================================
    BURSARY DIRECTORY
-
-   Status is unverified until a specific
-   funding round has been checked.
 ========================================== */
 
 const bursaries = [
@@ -1286,10 +1580,6 @@ function renderBursaries() {
 
 /* ==========================================
    JOB RESOURCE DIRECTORY
-
-   Individual vacancies will be added after
-   their employer, salary, deadline and
-   application URL have been checked.
 ========================================== */
 
 const jobResources = [
@@ -1399,22 +1689,578 @@ document.getElementById("jobProvince")
   .addEventListener("change",renderJobs);
 
 /* ==========================================
-   ACCOUNTS AND PREMIUM
+   SUPABASE STUDENT ACCOUNTS
 
-   These are intentionally not fake login
-   or payment systems. A secure backend
-   must be connected before activation.
+   Only the public publishable key is used.
+   Never put a secret/service-role key here.
 ========================================== */
 
-function accountNotice() {
+const SUPABASE_URL =
+  "https://xvrkaloaheigccrqwkqx.supabase.co";
 
-  alert(
-    "Private UniMatch SA accounts are being prepared. " +
-    "Secure sign-up and sign-in will be activated " +
-    "when the account system is connected."
-  );
+const SUPABASE_KEY =
+  "sb_publishable_oNXGZUMuqnd310PLOw1aeA_1GeHyhQK";
+
+const SITE_URL =
+  "https://novawebatelier26-web.github.io/unimatch-sa/";
+
+let db = null;
+let currentUser = null;
+let authMode = "login";
+let profileRequest = 0;
+
+const accountButton =
+  document.getElementById("accountButton");
+
+const authOverlay =
+  document.getElementById("authOverlay");
+
+const authMessage =
+  document.getElementById("authMessage");
+
+function showMessage(element,message,isError=false) {
+  element.textContent = message;
+  element.classList.toggle("error",isError);
+  element.style.display = "block";
+}
+
+function clearMessage(element) {
+  element.textContent = "";
+  element.style.display = "none";
+  element.classList.remove("error");
+}
+
+function openAuth() {
+  clearMessage(authMessage);
+  authOverlay.classList.add("active");
+}
+
+function closeAuth() {
+  authOverlay.classList.remove("active");
+}
+
+function setAuthMode(mode) {
+
+  authMode = mode;
+
+  const signup = mode === "signup";
+
+  document.getElementById("signupFields")
+    .classList.toggle("hidden",!signup);
+
+  document.getElementById("passwordHint")
+    .classList.toggle("hidden",!signup);
+
+  document.getElementById("loginTab")
+    .classList.toggle("active",!signup);
+
+  document.getElementById("signupTab")
+    .classList.toggle("active",signup);
+
+  document.getElementById("authSubmit").textContent =
+    signup ? "Create Free Account" : "Sign In";
+
+  document.getElementById("authPassword")
+    .setAttribute(
+      "autocomplete",
+      signup ? "new-password" : "current-password"
+    );
+
+  document.getElementById("signupName").required = signup;
+  document.getElementById("signupProvince").required = signup;
+
+  clearMessage(authMessage);
+}
+
+document.getElementById("loginTab")
+  .addEventListener("click",() => setAuthMode("login"));
+
+document.getElementById("signupTab")
+  .addEventListener("click",() => setAuthMode("signup"));
+
+document.getElementById("closeAuth")
+  .addEventListener("click",closeAuth);
+
+authOverlay.addEventListener("click",event => {
+  if(event.target === authOverlay) closeAuth();
+});
+
+accountButton.addEventListener("click",() => {
+
+  if(currentUser) {
+    document.getElementById("studentAccount")
+      .scrollIntoView({behavior:"smooth"});
+  } else {
+    openAuth();
+  }
+
+});
+
+function updateAccountUI(user) {
+
+  currentUser = user || null;
+
+  const section =
+    document.getElementById("studentAccount");
+
+  if(currentUser) {
+
+    accountButton.textContent = "My Account";
+
+    section.classList.remove("hidden");
+
+    document.getElementById("accountEmail").textContent =
+      "Email: " + (currentUser.email || "");
+
+    closeAuth();
+
+  } else {
+
+    accountButton.textContent = "Sign In";
+
+    section.classList.add("hidden");
+
+    document.getElementById("profileName").value = "";
+    document.getElementById("profileProvince").value = "";
+
+    document.getElementById("welcomeStudent").textContent =
+      "Welcome!";
+
+    clearMessage(
+      document.getElementById("profileMessage")
+    );
+
+  }
 
 }
+
+/* Register or sign in */
+
+document.getElementById("authForm")
+.addEventListener("submit",async event => {
+
+  event.preventDefault();
+
+  if(!db) {
+    showMessage(
+      authMessage,
+      "The account service could not load. Check your internet connection and refresh.",
+      true
+    );
+    return;
+  }
+
+  const email =
+    document.getElementById("authEmail")
+      .value.trim();
+
+  const password =
+    document.getElementById("authPassword").value;
+
+  const submitButton =
+    document.getElementById("authSubmit");
+
+  submitButton.disabled = true;
+
+  clearMessage(authMessage);
+
+  try {
+
+    if(authMode === "signup") {
+
+      const fullName =
+        document.getElementById("signupName")
+          .value.trim();
+
+      const province =
+        document.getElementById("signupProvince").value;
+
+      if(!fullName || !province) {
+        throw new Error(
+          "Please enter your full name and province."
+        );
+      }
+
+      if(password.length < 8) {
+        throw new Error(
+          "Your password must contain at least 8 characters."
+        );
+      }
+
+      const {data,error} = await db.auth.signUp({
+
+        email,
+        password,
+
+        options: {
+          emailRedirectTo:SITE_URL,
+          data:{
+            full_name:fullName,
+            province:province
+          }
+        }
+
+      });
+
+      if(error) throw error;
+
+      if(data.session) {
+
+        await showStudent(data.session.user);
+
+        showMessage(
+          document.getElementById("profileMessage"),
+          "Account created. Welcome to UniMatch SA!"
+        );
+
+      } else {
+
+        showMessage(
+          authMessage,
+          "If registration was accepted, check your email for a confirmation link. Confirm your email, return to UniMatch SA, then sign in. Check your spam folder too."
+        );
+
+      }
+
+    } else {
+
+      const {data,error} =
+        await db.auth.signInWithPassword({
+          email,
+          password
+        });
+
+      if(error) throw error;
+
+      if(!data.user) {
+        throw new Error(
+          "Unable to complete sign in. Please try again."
+        );
+      }
+
+      await showStudent(data.user);
+
+      closeAuth();
+
+      document.getElementById("studentAccount")
+        .scrollIntoView({behavior:"smooth"});
+
+    }
+
+  } catch(error) {
+
+    showMessage(
+      authMessage,
+      error.message || "Something went wrong. Try again.",
+      true
+    );
+
+  } finally {
+
+    submitButton.disabled = false;
+
+  }
+
+});
+
+/* ==========================================
+   PRIVATE STUDENT PROFILES
+
+   Profiles are protected by Supabase RLS.
+   Each signed-in student can access only
+   their own profile.
+========================================== */
+
+async function showStudent(user) {
+
+  updateAccountUI(user);
+
+  if(!user || !db) return;
+
+  const requestId = ++profileRequest;
+  const userId = user.id;
+
+  const messageElement =
+    document.getElementById("profileMessage");
+
+  clearMessage(messageElement);
+
+  const {data,error} = await db
+    .from("profiles")
+    .select("id,full_name,province")
+    .eq("id",userId)
+    .maybeSingle();
+
+  if(
+    requestId !== profileRequest ||
+    !currentUser ||
+    currentUser.id !== userId
+  ) return;
+
+  if(error) {
+
+    showMessage(
+      messageElement,
+      "Could not load your profile: " + error.message,
+      true
+    );
+
+    return;
+
+  }
+
+  if(data) {
+
+    document.getElementById("profileName").value =
+      data.full_name || "";
+
+    document.getElementById("profileProvince").value =
+      data.province || "";
+
+  } else {
+
+    // Registration metadata is used only to prefill
+    // the student's own form after authentication.
+
+    const metadata = user.user_metadata || {};
+
+    document.getElementById("profileName").value =
+      metadata.full_name || "";
+
+    const province =
+      metadata.province || "";
+
+    const select =
+      document.getElementById("profileProvince");
+
+    select.value = Array.from(select.options)
+      .some(option => option.value === province)
+        ? province
+        : "";
+
+    showMessage(
+      messageElement,
+      "Welcome! Please save your private profile."
+    );
+
+  }
+
+  const displayName =
+    document.getElementById("profileName").value.trim();
+
+  document.getElementById("welcomeStudent").textContent =
+    displayName
+      ? "Welcome, " + displayName + "!"
+      : "Welcome to your student account!";
+
+}
+
+document.getElementById("profileForm")
+.addEventListener("submit",async event => {
+
+  event.preventDefault();
+
+  const messageElement =
+    document.getElementById("profileMessage");
+
+  if(!db || !currentUser) {
+
+    showMessage(
+      messageElement,
+      "Please sign in first.",
+      true
+    );
+
+    return;
+
+  }
+
+  const fullName =
+    document.getElementById("profileName")
+      .value.trim();
+
+  const province =
+    document.getElementById("profileProvince").value;
+
+  if(!fullName || !province) {
+
+    showMessage(
+      messageElement,
+      "Please enter your name and select a province.",
+      true
+    );
+
+    return;
+
+  }
+
+  const saveButton =
+    document.getElementById("saveProfileButton");
+
+  saveButton.disabled = true;
+
+  clearMessage(messageElement);
+
+  try {
+
+    const {data:{user},error:userError} =
+      await db.auth.getUser();
+
+    if(userError || !user) {
+      throw new Error(
+        "Your session has expired. Please sign in again."
+      );
+    }
+
+    const {error} = await db
+      .from("profiles")
+      .upsert({
+        id:user.id,
+        full_name:fullName,
+        province:province
+      },{
+        onConflict:"id"
+      });
+
+    if(error) throw error;
+
+    document.getElementById("welcomeStudent")
+      .textContent = "Welcome, " + fullName + "!";
+
+    showMessage(
+      messageElement,
+      "Your private profile has been saved successfully."
+    );
+
+  } catch(error) {
+
+    showMessage(
+      messageElement,
+      error.message || "Could not save your profile.",
+      true
+    );
+
+  } finally {
+
+    saveButton.disabled = false;
+
+  }
+
+});
+
+/* Sign out */
+
+document.getElementById("logoutButton")
+.addEventListener("click",async () => {
+
+  if(!db) return;
+
+  const button =
+    document.getElementById("logoutButton");
+
+  button.disabled = true;
+
+  try {
+
+    const {error} = await db.auth.signOut();
+
+    if(error) throw error;
+
+    profileRequest++;
+
+    updateAccountUI(null);
+
+    window.location.hash = "#home";
+
+  } catch(error) {
+
+    showMessage(
+      document.getElementById("profileMessage"),
+      error.message || "Could not sign out.",
+      true
+    );
+
+  } finally {
+
+    button.disabled = false;
+
+  }
+
+});
+
+/* ==========================================
+   INITIALISE SUPABASE
+========================================== */
+
+async function initialiseAccounts() {
+
+  if(
+    !window.supabase ||
+    !window.supabase.createClient
+  ) {
+
+    console.error("Supabase library did not load.");
+
+    return;
+
+  }
+
+  db = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY,
+    {
+      auth:{
+        persistSession:true,
+        autoRefreshToken:true,
+        detectSessionInUrl:true
+      }
+    }
+  );
+
+  // Listen for login and logout.
+  // Profile loading is deferred to avoid making
+  // database requests inside the auth callback.
+
+  db.auth.onAuthStateChange((event,session) => {
+
+    const user = session?.user || null;
+
+    if(event === "SIGNED_OUT") {
+
+      profileRequest++;
+      updateAccountUI(null);
+
+    } else if(
+      event === "SIGNED_IN" ||
+      event === "INITIAL_SESSION" ||
+      event === "USER_UPDATED"
+    ) {
+
+      if(user) {
+
+        updateAccountUI(user);
+
+        setTimeout(() => {
+          if(currentUser?.id === user.id) {
+            showStudent(user);
+          }
+        },0);
+
+      } else {
+
+        updateAccountUI(null);
+
+      }
+
+    }
+
+  });
+
+}
+
+/* ==========================================
+   PREMIUM
+========================================== */
 
 function premiumNotice() {
 
@@ -1427,7 +2273,7 @@ function premiumNotice() {
 }
 
 /* ==========================================
-   INITIALISE
+   INITIALISE WEBSITE
 ========================================== */
 
 document.getElementById("year").textContent =
@@ -1436,6 +2282,8 @@ document.getElementById("year").textContent =
 renderCourses();
 renderBursaries();
 renderJobs();
+
+window.addEventListener("load",initialiseAccounts);
 
 </script>
 
