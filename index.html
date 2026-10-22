@@ -8,7 +8,7 @@
 
 <title>UniMatch SA | Your Future Starts Here</title>
 
-<meta name="description" content="UniMatch SA helps South Africans calculate APS, explore university courses, find bursaries and discover jobs and learnerships.">
+<meta name="description" content="Calculate your APS, compare university course requirements, find bursaries and explore jobs based on your education level in South Africa.">
 
 <style>
 :root {
@@ -28,7 +28,7 @@
 
 html {
   scroll-behavior:smooth;
-  scroll-padding-top:115px;
+  scroll-padding-top:135px;
 }
 
 body {
@@ -117,7 +117,6 @@ nav a:hover {
   display:flex;
   align-items:center;
   color:white;
-
   background:
     linear-gradient(
       90deg,
@@ -439,7 +438,73 @@ footer p {
   display:none!important;
 }
 
-/* ACCOUNT WINDOW */
+/* NEW MATCHING FEATURES */
+
+.matching-section {
+  background:#edf5f0;
+}
+
+.match-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+.match-result {
+  display:none;
+  margin-top:20px;
+  padding:20px;
+  border-radius:14px;
+  border:1px solid var(--border);
+  background:#f5f7f8;
+}
+
+.match-result.success {
+  background:#e7f5ee;
+  border-color:#a7d8bc;
+}
+
+.match-result.warning {
+  background:#fff8e7;
+  border-color:#f5d992;
+}
+
+.match-result.fail {
+  background:#fde8e8;
+  border-color:#efb4b4;
+}
+
+.match-result h3 {
+  margin-top:0;
+}
+
+.job-levels {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin-bottom:25px;
+}
+
+.level-button {
+  padding:17px 12px;
+  border:2px solid var(--border);
+  border-radius:14px;
+  background:white;
+  color:var(--text);
+  font-weight:bold;
+  text-align:center;
+}
+
+.level-button.active {
+  background:var(--green);
+  color:white;
+  border-color:var(--green);
+}
+
+.small-text {
+  font-size:13px;
+  color:var(--grey);
+}
 
 .auth-overlay {
   display:none;
@@ -588,7 +653,7 @@ footer p {
     font-size:23px;
   }
 
-  .search-area {
+  .search-area,.match-grid,.job-levels {
     grid-template-columns:1fr;
   }
 
@@ -621,6 +686,7 @@ footer p {
 
     <nav>
       <a href="#aps">APS</a>
+      <a href="#matching">Match</a>
       <a href="#courses">Courses</a>
       <a href="#bursaries">Bursaries</a>
       <a href="#jobs">Jobs</a>
@@ -634,7 +700,7 @@ footer p {
   </div>
 </header>
 
-<!-- REAL STUDENT REGISTRATION AND LOGIN -->
+<!-- STUDENT REGISTRATION AND LOGIN -->
 
 <div class="auth-overlay" id="authOverlay">
 
@@ -772,8 +838,9 @@ footer p {
       </p>
 
       <p>
-        Calculate your APS, discover university courses,
-        find bursaries and explore jobs across South Africa.
+        Calculate your APS, compare course requirements,
+        find bursaries and discover career opportunities
+        across South Africa.
       </p>
 
       <div class="hero-buttons">
@@ -793,7 +860,7 @@ footer p {
   </div>
 </section>
 
-<!-- PRIVATE PROFILE -->
+<!-- PRIVATE STUDENT PROFILE -->
 
 <section id="studentAccount" class="hidden">
   <div class="container">
@@ -869,6 +936,8 @@ footer p {
   </div>
 </section>
 
+<!-- FEATURES -->
+
 <section id="features">
   <div class="container">
 
@@ -888,10 +957,10 @@ footer p {
       </div>
 
       <div class="card">
-        <div class="card-icon">🎓</div>
-        <h3>Find Courses</h3>
-        <p>Explore universities and course information.</p>
-        <a href="#courses" class="btn">Find Courses</a>
+        <div class="card-icon">🎯</div>
+        <h3>Course Matching</h3>
+        <p>Compare your marks with official programme requirements.</p>
+        <a href="#matching" class="btn">Check My Match</a>
       </div>
 
       <div class="card">
@@ -904,7 +973,7 @@ footer p {
       <div class="card">
         <div class="card-icon">💼</div>
         <h3>Find Jobs</h3>
-        <p>Explore jobs and learnership opportunities.</p>
+        <p>Explore opportunities for your education level.</p>
         <a href="#jobs" class="btn">Find Jobs</a>
       </div>
 
@@ -912,6 +981,8 @@ footer p {
 
   </div>
 </section>
+
+<!-- APS CALCULATOR -->
 
 <section id="aps">
   <div class="container">
@@ -925,11 +996,10 @@ footer p {
     <div class="panel">
 
       <div class="notice" style="margin-top:0">
-        This calculator uses the standard seven-level NSC
-        points scale and excludes Life Orientation from
-        the six-subject total. Universities can use
-        different APS rules. Always check your chosen
-        university's official requirements.
+        This calculator uses the seven-level NSC points
+        scale and excludes Life Orientation from the
+        six-subject total. Universities may calculate
+        APS differently. Always check their official rules.
       </div>
 
       <form id="apsForm">
@@ -950,6 +1020,10 @@ footer p {
         <div>Your estimated APS</div>
         <strong id="apsScore">0</strong>
         <p id="apsMessage"></p>
+
+        <a href="#matching" class="btn">
+          Compare Course Requirements →
+        </a>
       </div>
 
     </div>
@@ -957,13 +1031,117 @@ footer p {
   </div>
 </section>
 
+<!-- NEW COURSE REQUIREMENT MATCHING -->
+
+<section id="matching" class="matching-section">
+  <div class="container">
+
+    <h2 class="section-title">APS-to-Course Matching</h2>
+
+    <p class="section-subtitle">
+      Check how your marks compare with a university
+      programme's published minimum requirements.
+    </p>
+
+    <div class="panel">
+
+      <div class="notice" style="margin-top:0">
+        First calculate your APS above. Then copy the
+        requirements from the university's official
+        programme page into this checker.
+        UniMatch does not invent admission thresholds.
+      </div>
+
+      <p id="matchingApsDisplay">
+        Your calculated APS: Not calculated yet.
+      </p>
+
+      <form id="matchingForm">
+
+        <label for="programmeName">
+          University Programme
+        </label>
+
+        <input
+          id="programmeName"
+          type="text"
+          maxlength="120"
+          placeholder="e.g. Programme name from university website"
+          required
+        >
+
+        <label for="officialCourseUrl">
+          Official Programme Page (optional)
+        </label>
+
+        <input
+          id="officialCourseUrl"
+          type="url"
+          placeholder="https://..."
+        >
+
+        <label for="requiredAps">
+          Published Minimum APS
+        </label>
+
+        <input
+          id="requiredAps"
+          type="number"
+          min="0"
+          max="42"
+          step="1"
+          placeholder="Enter the official six-subject APS requirement"
+          required
+        >
+
+        <div class="notice">
+          Only enter an APS here if the institution
+          uses a comparable six-subject, 42-point
+          calculation. Otherwise use its official
+          admissions calculator instead.
+        </div>
+
+        <h3>Compulsory Subject Requirements</h3>
+
+        <p class="small-text">
+          Add up to three published compulsory subjects.
+          Leave unused subject requirements blank.
+        </p>
+
+        <div id="requirementInputs"></div>
+
+        <button
+          type="submit"
+          class="btn gold"
+          style="width:100%;margin-top:20px"
+        >
+          Check My Course Match
+        </button>
+
+      </form>
+
+      <div
+        id="matchingResult"
+        class="match-result"
+        role="status"
+        aria-live="polite"
+      ></div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- UNIVERSITY DIRECTORY -->
+
 <section id="courses">
   <div class="container">
 
     <h2 class="section-title">Course Finder</h2>
 
     <p class="section-subtitle">
-      Explore universities and visit their official course pages.
+      Explore universities and check their official
+      programme and admission information.
     </p>
 
     <div class="search-area">
@@ -971,8 +1149,8 @@ footer p {
       <input
         id="courseSearch"
         type="search"
-        placeholder="Search universities or courses..."
-        aria-label="Search universities or courses"
+        placeholder="Search universities..."
+        aria-label="Search universities"
       >
 
       <select id="courseProvince" aria-label="Filter university province">
@@ -993,15 +1171,15 @@ footer p {
     <div class="listing-grid" id="courseResults"></div>
 
     <div class="notice">
-      Course admission requirements, APS thresholds, application
-      dates and availability must be confirmed on the official
-      university website. An APS score alone does not guarantee
-      admission. Salary estimates will only be displayed when
-      supported by a suitable source.
+      Requirements, application dates and availability
+      must be confirmed on the official university website.
+      Meeting minimum requirements does not guarantee admission.
     </div>
 
   </div>
 </section>
+
+<!-- BURSARIES -->
 
 <section id="bursaries">
   <div class="container">
@@ -1017,52 +1195,107 @@ footer p {
   </div>
 </section>
 
+<!-- NEW EDUCATION-BASED JOB FINDER -->
+
 <section id="jobs">
   <div class="container">
 
-    <h2 class="section-title">
-      Jobs & Learnership Finder
-    </h2>
+    <h2 class="section-title">Jobs & Learnership Finder</h2>
 
     <p class="section-subtitle">
-      Find opportunities across South Africa.
+      Start with your highest completed education level.
     </p>
 
-    <div class="search-area">
+    <div class="panel" style="max-width:100%;margin-bottom:25px">
 
-      <input
-        id="jobSearch"
-        type="search"
-        placeholder="Search jobs or providers..."
-        aria-label="Search jobs"
+      <h3>Select Your Education Level</h3>
+
+      <div class="job-levels" id="jobLevels">
+
+        <button
+          type="button"
+          class="level-button"
+          data-level="no-matric"
+          aria-pressed="false"
+        >
+          📘 Did Not Complete Matric
+        </button>
+
+        <button
+          type="button"
+          class="level-button"
+          data-level="matric"
+          aria-pressed="false"
+        >
+          🎓 Completed Matric
+        </button>
+
+        <button
+          type="button"
+          class="level-button"
+          data-level="graduate"
+          aria-pressed="false"
+        >
+          🏛️ University / College Graduate
+        </button>
+
+      </div>
+
+      <p class="small-text" id="jobLevelDescription">
+        Select a category to explore relevant job-search
+        resources and opportunity types.
+      </p>
+
+      <div class="search-area" style="margin-top:20px">
+
+        <input
+          id="jobSearch"
+          type="search"
+          placeholder="Search opportunity types or providers..."
+          aria-label="Search job resources"
+        >
+
+        <select id="jobProvince" aria-label="Filter job province">
+          <option value="all">All Provinces</option>
+          <option>Gauteng</option>
+          <option>Limpopo</option>
+          <option>Mpumalanga</option>
+          <option>North West</option>
+          <option>Free State</option>
+          <option>KwaZulu-Natal</option>
+          <option>Eastern Cape</option>
+          <option>Western Cape</option>
+          <option>Northern Cape</option>
+        </select>
+
+      </div>
+
+      <button
+        id="showAllJobs"
+        type="button"
+        class="btn"
+        style="background:#52635a"
       >
-
-      <select id="jobProvince" aria-label="Filter job province">
-        <option value="all">All Provinces</option>
-        <option>Gauteng</option>
-        <option>Limpopo</option>
-        <option>Mpumalanga</option>
-        <option>North West</option>
-        <option>Free State</option>
-        <option>KwaZulu-Natal</option>
-        <option>Eastern Cape</option>
-        <option>Western Cape</option>
-        <option>Northern Cape</option>
-      </select>
+        Show All Education Levels
+      </button>
 
     </div>
 
     <div class="listing-grid" id="jobResults"></div>
 
     <div class="notice">
-      We do not charge people to apply for jobs.
-      Only verified individual vacancies will be labelled Open.
-      Advertised salaries will be shown when supplied by the
-      original employer.
+      These are job-search resources and suggested opportunity
+      categories, not confirmed individual vacancies.
+      Eligibility depends on each employer's requirements.
+      Check current listings and application deadlines
+      on the original website. UniMatch does not charge
+      people to apply for jobs.
     </div>
 
   </div>
 </section>
+
+<!-- PRICING -->
 
 <section id="pricing">
   <div class="container">
@@ -1085,9 +1318,10 @@ footer p {
 
         <ul>
           <li>APS Calculator</li>
-          <li>Explore courses</li>
+          <li>Course requirement checker</li>
+          <li>Explore universities</li>
           <li>Find bursaries</li>
-          <li>Find jobs</li>
+          <li>Education-based job finder</li>
           <li>Official application links</li>
           <li>Advertisements may appear</li>
         </ul>
@@ -1116,7 +1350,6 @@ footer p {
         <ul>
           <li>Everything in Free</li>
           <li>Ad-free experience (planned)</li>
-          <li>Private saved profile</li>
           <li>Saved opportunities (planned)</li>
           <li>Application reminders (planned)</li>
           <li>Extra matching features (planned)</li>
@@ -1131,8 +1364,8 @@ footer p {
         </button>
 
         <p style="font-size:12px;color:var(--grey)">
-          Payments are not active yet. No money is collected
-          through this page.
+          Payments are not active yet. No money is
+          collected through this page.
         </p>
 
       </div>
@@ -1143,13 +1376,15 @@ footer p {
       class="notice"
       style="max-width:850px;margin:25px auto 0"
     >
-      UniMatch SA will keep official application links accessible
-      to free users. Premium is optional and will be activated
-      only after secure accounts and payments are connected.
+      Free users retain access to official application links.
+      Private student profiles are already free.
+      Premium will be optional.
     </div>
 
   </div>
 </section>
+
+<!-- HOW IT WORKS -->
 
 <section class="dark-section">
   <div class="container">
@@ -1170,20 +1405,20 @@ footer p {
 
       <div>
         <div class="step-number">2</div>
-        <h3>Explore</h3>
-        <p>Find courses, bursaries and jobs.</p>
+        <h3>Compare</h3>
+        <p>Check course requirements.</p>
       </div>
 
       <div>
         <div class="step-number">3</div>
-        <h3>Check Status</h3>
-        <p>View official application information.</p>
+        <h3>Explore</h3>
+        <p>Find funding and job resources.</p>
       </div>
 
       <div>
         <div class="step-number">4</div>
         <h3>Apply Directly</h3>
-        <p>Continue on the original provider's website.</p>
+        <p>Use official provider websites.</p>
       </div>
 
     </div>
@@ -1221,6 +1456,28 @@ footer p {
 <script>
 
 /* ==========================================
+   SHARED HELPERS
+========================================== */
+
+function safeText(value) {
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#39;");
+}
+
+function safeOfficialUrl(value) {
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" ? url.href : "";
+  } catch {
+    return "";
+  }
+}
+
+/* ==========================================
    APS CALCULATOR
 ========================================== */
 
@@ -1236,6 +1493,9 @@ const subjectNames = [
 
 const subjectContainer =
   document.getElementById("subjectInputs");
+
+let latestAps = null;
+let latestSubjects = [];
 
 subjectNames.forEach((name,index) => {
 
@@ -1278,16 +1538,30 @@ subjectNames.forEach((name,index) => {
 });
 
 function markToPoints(mark) {
-
   if(mark >= 80) return 7;
   if(mark >= 70) return 6;
   if(mark >= 60) return 5;
   if(mark >= 50) return 4;
   if(mark >= 40) return 3;
   if(mark >= 30) return 2;
-
   return 1;
 }
+
+function invalidateAps() {
+  latestAps = null;
+  latestSubjects = [];
+
+  document.getElementById("apsResult").style.display =
+    "none";
+
+  document.getElementById("matchingApsDisplay").textContent =
+    "Your calculated APS: Please calculate again after editing your marks.";
+
+  document.getElementById("matchingResult").style.display =
+    "none";
+}
+
+subjectContainer.addEventListener("input",invalidateAps);
 
 document.getElementById("apsForm")
 .addEventListener("submit",function(event) {
@@ -1295,22 +1569,38 @@ document.getElementById("apsForm")
   event.preventDefault();
 
   let total = 0;
+  const subjects = [];
 
   for(let i=0;i<7;i++) {
 
-    const mark =
-      Number(document.getElementById("mark"+i).value);
+    const input =
+      document.getElementById("mark"+i);
+
+    const mark = Number(input.value);
+
+    const name =
+      document.getElementById("subject"+i)
+        .value.trim();
 
     if(
-      !Number.isFinite(mark) ||
+      input.value === "" ||
+      !Number.isInteger(mark) ||
       mark < 0 ||
-      mark > 100
+      mark > 100 ||
+      !name
     ) {
-      alert("Please enter valid marks between 0 and 100.");
+      alert(
+        "Please enter all seven subject names and valid whole-number marks between 0 and 100."
+      );
       return;
     }
 
-    // Life Orientation is excluded.
+    subjects.push({
+      name,
+      mark,
+      points:markToPoints(mark),
+      lifeOrientation:i === 6
+    });
 
     if(i !== 6) {
       total += markToPoints(mark);
@@ -1318,16 +1608,24 @@ document.getElementById("apsForm")
 
   }
 
+  latestAps = total;
+  latestSubjects = subjects;
+
   document.getElementById("apsScore").textContent =
     total + " / 42";
 
   document.getElementById("apsMessage").textContent =
     "This is your estimated six-subject NSC APS. " +
-    "Different universities may calculate APS differently. " +
-    "Check official course requirements before applying.";
+    "Different universities may calculate APS differently.";
 
   document.getElementById("apsResult").style.display =
     "block";
+
+  document.getElementById("matchingApsDisplay").textContent =
+    "Your calculated APS: " + total + " / 42";
+
+  document.getElementById("matchingResult").style.display =
+    "none";
 
   document.getElementById("apsResult")
     .scrollIntoView({behavior:"smooth",block:"center"});
@@ -1335,118 +1633,318 @@ document.getElementById("apsForm")
 });
 
 /* ==========================================
-   COURSE DIRECTORY
+   COURSE REQUIREMENT CHECKER
+========================================== */
+
+const requirementContainer =
+  document.getElementById("requirementInputs");
+
+for(let i=0;i<3;i++) {
+
+  const wrapper = document.createElement("div");
+
+  wrapper.className = "match-grid";
+
+  wrapper.innerHTML = `
+    <div>
+      <label for="requiredSubject${i}">
+        Required Subject ${i+1}
+      </label>
+      <input
+        id="requiredSubject${i}"
+        type="text"
+        maxlength="100"
+        placeholder="Exact subject name"
+      >
+    </div>
+
+    <div>
+      <label for="requiredMark${i}">
+        Minimum Mark %
+      </label>
+      <input
+        id="requiredMark${i}"
+        type="number"
+        min="0"
+        max="100"
+        step="1"
+        placeholder="e.g. 60"
+      >
+    </div>
+  `;
+
+  requirementContainer.appendChild(wrapper);
+
+}
+
+function normaliseSubject(value) {
+  return value
+    .toLowerCase()
+    .replace(/\s+/g," ")
+    .trim();
+}
+
+document.getElementById("matchingForm")
+.addEventListener("submit",event => {
+
+  event.preventDefault();
+
+  const result =
+    document.getElementById("matchingResult");
+
+  result.style.display = "block";
+  result.className = "match-result";
+
+  if(latestAps === null) {
+
+    result.classList.add("warning");
+    result.textContent =
+      "Please complete the APS calculator first.";
+
+    return;
+  }
+
+  const programme =
+    document.getElementById("programmeName")
+      .value.trim();
+
+  const minimumInput =
+    document.getElementById("requiredAps");
+
+  const minimum = Number(minimumInput.value);
+
+  const officialUrlInput =
+    document.getElementById("officialCourseUrl").value.trim();
+
+  if(
+    minimumInput.value === "" ||
+    !Number.isInteger(minimum) ||
+    minimum < 0 ||
+    minimum > 42
+  ) {
+    result.classList.add("warning");
+    result.textContent =
+      "Enter a valid comparable APS requirement between 0 and 42.";
+    return;
+  }
+
+  if(
+    officialUrlInput &&
+    !safeOfficialUrl(officialUrlInput)
+  ) {
+    result.classList.add("warning");
+    result.textContent =
+      "Please enter a valid HTTPS official programme link.";
+    return;
+  }
+
+  const subjectChecks = [];
+
+  for(let i=0;i<3;i++) {
+
+    const name =
+      document.getElementById("requiredSubject"+i)
+        .value.trim();
+
+    const markInput =
+      document.getElementById("requiredMark"+i);
+
+    const markText = markInput.value.trim();
+
+    if(!name && !markText) continue;
+
+    if(
+      !name ||
+      markText === "" ||
+      !Number.isInteger(Number(markText)) ||
+      Number(markText) < 0 ||
+      Number(markText) > 100
+    ) {
+      result.classList.add("warning");
+      result.textContent =
+        "Complete both the subject name and minimum mark for every compulsory subject you add.";
+      return;
+    }
+
+    const matchingSubject = latestSubjects.find(subject =>
+      normaliseSubject(subject.name) === normaliseSubject(name)
+    );
+
+    subjectChecks.push({
+      name,
+      minimum:Number(markText),
+      actual:matchingSubject ? matchingSubject.mark : null
+    });
+
+  }
+
+  const apsPass = latestAps >= minimum;
+
+  const subjectsPass = subjectChecks.every(item =>
+    item.actual !== null &&
+    item.actual >= item.minimum
+  );
+
+  const allPass = apsPass && subjectsPass;
+
+  result.classList.add(allPass ? "success" : "warning");
+
+  const heading = document.createElement("h3");
+
+  heading.textContent = allPass
+    ? "Your entered marks meet these listed minimums."
+    : "One or more listed minimums are not met or could not be checked.";
+
+  result.appendChild(heading);
+
+  const programmeText = document.createElement("p");
+
+  programmeText.textContent =
+    "Programme: " + programme;
+
+  result.appendChild(programmeText);
+
+  const apsText = document.createElement("p");
+
+  apsText.textContent =
+    "APS: " + latestAps + "/42. Entered minimum: " +
+    minimum + "/42. " +
+    (apsPass ? "APS check passed." : "APS is below the entered minimum.");
+
+  result.appendChild(apsText);
+
+  subjectChecks.forEach(item => {
+
+    const p = document.createElement("p");
+
+    if(item.actual === null) {
+      p.textContent =
+        item.name + ": No exact subject-name match found in your entered marks. Please check the subject names and official requirements.";
+    } else {
+      p.textContent =
+        item.name + ": Your mark " + item.actual +
+        "%. Entered minimum " + item.minimum +
+        "%. " +
+        (item.actual >= item.minimum ? "Passed." : "Below minimum.");
+    }
+
+    result.appendChild(p);
+
+  });
+
+  const caution = document.createElement("p");
+
+  caution.textContent =
+    "This is a comparison with requirements entered into the checker, not an admission decision. Confirm the institution's APS method, subject combinations, additional selection criteria and current requirements.";
+
+  result.appendChild(caution);
+
+  if(officialUrlInput) {
+
+    const link = document.createElement("a");
+
+    link.href = safeOfficialUrl(officialUrlInput);
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.className = "btn";
+    link.textContent = "Recheck Official Programme ↗";
+
+    result.appendChild(link);
+
+  }
+
+});
+
+/* ==========================================
+   UNIVERSITY DIRECTORY
 ========================================== */
 
 const universities = [
-
   {
     name:"University of Pretoria",
     province:"Gauteng",
     description:"Explore qualifications and official admissions information.",
     url:"https://www.up.ac.za/"
   },
-
   {
     name:"University of Johannesburg",
     province:"Gauteng",
     description:"Find programmes, entry requirements and application information.",
     url:"https://www.uj.ac.za/"
   },
-
   {
     name:"Tshwane University of Technology",
     province:"Gauteng",
     description:"Explore diplomas, degrees and official admission information.",
     url:"https://www.tut.ac.za/"
   },
-
   {
     name:"University of South Africa",
     province:"Gauteng",
     description:"Explore distance-learning qualifications and admissions.",
     url:"https://www.unisa.ac.za/"
   },
-
   {
     name:"University of Limpopo",
     province:"Limpopo",
     description:"Find qualifications and university application information.",
     url:"https://www.ul.ac.za/"
   },
-
   {
     name:"University of Cape Town",
     province:"Western Cape",
     description:"Explore official undergraduate study information.",
     url:"https://www.uct.ac.za/"
   },
-
   {
     name:"Stellenbosch University",
     province:"Western Cape",
     description:"Explore programmes and official admission requirements.",
     url:"https://www.sun.ac.za/"
   },
-
   {
     name:"University of KwaZulu-Natal",
     province:"KwaZulu-Natal",
     description:"Find qualifications and application information.",
     url:"https://www.ukzn.ac.za/"
   },
-
   {
     name:"University of the Free State",
     province:"Free State",
     description:"Explore courses and official admissions.",
     url:"https://www.ufs.ac.za/"
   },
-
   {
     name:"Nelson Mandela University",
     province:"Eastern Cape",
     description:"Explore qualifications and admissions information.",
     url:"https://www.mandela.ac.za/"
   },
-
   {
     name:"North-West University",
     province:"North West",
     description:"Explore qualifications and application information.",
     url:"https://www.nwu.ac.za/"
   },
-
   {
     name:"University of Mpumalanga",
     province:"Mpumalanga",
     description:"Find programmes and admission information.",
     url:"https://www.ump.ac.za/"
   },
-
   {
     name:"Sol Plaatje University",
     province:"Northern Cape",
     description:"Explore qualifications and official admissions.",
     url:"https://www.spu.ac.za/"
   }
-
 ];
-
-function safeText(value) {
-  return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#39;");
-}
 
 function renderCourses() {
 
   const search =
     document.getElementById("courseSearch")
-    .value.toLowerCase().trim();
+      .value.toLowerCase().trim();
 
   const province =
     document.getElementById("courseProvince").value;
@@ -1490,14 +1988,9 @@ function renderCourses() {
           Check the official programme information.
         </p>
 
-        <p>
-          <strong>Estimated career salary:</strong>
-          Depends on the qualification and career.
-        </p>
-
         <a
           class="btn"
-          href="${item.url}"
+          href="${safeOfficialUrl(item.url)}"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -1522,25 +2015,21 @@ document.getElementById("courseProvince")
 ========================================== */
 
 const bursaries = [
-
   {
     name:"NSFAS",
     description:"Explore financial assistance for eligible students.",
     url:"https://www.nsfas.org.za/"
   },
-
   {
     name:"Funza Lushaka",
     description:"Explore the official teaching bursary programme.",
     url:"https://www.funzalushaka.doe.gov.za/"
   },
-
   {
     name:"National Research Foundation",
     description:"Explore funding and research opportunities.",
     url:"https://www.nrf.ac.za/"
   }
-
 ];
 
 function renderBursaries() {
@@ -1564,7 +2053,7 @@ function renderBursaries() {
         </p>
 
         <a
-          href="${item.url}"
+          href="${safeOfficialUrl(item.url)}"
           target="_blank"
           rel="noopener noreferrer"
           class="btn"
@@ -1579,40 +2068,124 @@ function renderBursaries() {
 }
 
 /* ==========================================
-   JOB RESOURCE DIRECTORY
+   EDUCATION-BASED JOB FINDER
+
+   These are search resources, not confirmed
+   vacancies or guaranteed eligibility.
 ========================================== */
 
 const jobResources = [
 
   {
     name:"SAYouth",
-    description:"Explore youth employment and learning opportunities.",
+    description:"Explore youth employment, entry-level opportunities and learning programmes. Check each listing's eligibility.",
+    levels:["no-matric","matric","graduate"],
+    types:"entry-level jobs learnerships youth opportunities",
     province:"all",
     url:"https://sayouth.mobi/"
   },
 
   {
     name:"Harambee Youth Employment Accelerator",
-    description:"Explore youth employment support and opportunities.",
+    description:"Explore youth employment support and pathways into work.",
+    levels:["no-matric","matric","graduate"],
+    types:"youth employment work readiness opportunities",
     province:"all",
     url:"https://www.harambee.co.za/"
   },
 
   {
-    name:"South African Government",
-    description:"Find official public-sector vacancy information.",
+    name:"Indeed South Africa — Entry-Level Search",
+    description:"Search for advertised entry-level roles. Some positions may not require matric; always check the actual advert.",
+    levels:["no-matric","matric"],
+    types:"general worker cleaning assistant entry level",
+    province:"all",
+    url:"https://za.indeed.com/"
+  },
+
+  {
+    name:"Indeed South Africa — Matric-Level Search",
+    description:"Explore advertised receptionist, retail, customer service and other roles, subject to employer requirements.",
+    levels:["matric"],
+    types:"matric receptionist retail customer service",
+    province:"all",
+    url:"https://za.indeed.com/"
+  },
+
+  {
+    name:"South African Government — Vacancies",
+    description:"Check official government vacancies, including entry-level, administrative and graduate positions where advertised.",
+    levels:["no-matric","matric","graduate"],
+    types:"government public sector vacancies",
     province:"all",
     url:"https://www.gov.za/"
   },
 
   {
-    name:"Indeed South Africa",
-    description:"Search job advertisements and check employer details.",
+    name:"Indeed South Africa — Graduate Search",
+    description:"Search graduate, junior professional and internship advertisements.",
+    levels:["graduate"],
+    types:"graduate jobs internship junior professional",
     province:"all",
     url:"https://za.indeed.com/"
+  },
+
+  {
+    name:"National Research Foundation",
+    description:"Explore research-related funding and opportunities relevant to suitably qualified graduates.",
+    levels:["graduate"],
+    types:"research postgraduate graduate opportunities",
+    province:"all",
+    url:"https://www.nrf.ac.za/"
   }
 
 ];
+
+const jobLevelDescriptions = {
+  "no-matric":
+    "Explore entry-level resources and opportunities that may accept applicants without matric. Check each individual vacancy's minimum requirements.",
+  "matric":
+    "Explore matric-level jobs, learnerships and entry-level opportunities. Some may require additional certificates or experience.",
+  "graduate":
+    "Explore graduate roles, internships and professional opportunities. Check whether your specific qualification is accepted."
+};
+
+let selectedJobLevel = "all";
+
+function selectJobLevel(level) {
+
+  selectedJobLevel = level;
+
+  document.querySelectorAll(".level-button")
+    .forEach(button => {
+
+      const active = button.dataset.level === level;
+
+      button.classList.toggle("active",active);
+      button.setAttribute("aria-pressed",String(active));
+
+    });
+
+  document.getElementById("jobLevelDescription")
+    .textContent =
+      jobLevelDescriptions[level] ||
+      "Showing resources across all education levels. Individual vacancy requirements still apply.";
+
+  renderJobs();
+
+}
+
+document.querySelectorAll(".level-button")
+  .forEach(button => {
+
+    button.addEventListener("click",() => {
+      selectJobLevel(button.dataset.level);
+    });
+
+  });
+
+document.getElementById("showAllJobs")
+  .addEventListener("click",() => selectJobLevel("all"));
 
 function renderJobs() {
 
@@ -1625,16 +2198,23 @@ function renderJobs() {
 
   const filtered = jobResources.filter(item => {
 
+    const matchesLevel =
+      selectedJobLevel === "all" ||
+      item.levels.includes(selectedJobLevel);
+
     const matchesSearch =
       item.name.toLowerCase().includes(search) ||
-      item.description.toLowerCase().includes(search);
+      item.description.toLowerCase().includes(search) ||
+      item.types.toLowerCase().includes(search);
 
     const matchesProvince =
       province === "all" ||
       item.province === "all" ||
       item.province === province;
 
-    return matchesSearch && matchesProvince;
+    return matchesLevel &&
+      matchesSearch &&
+      matchesProvince;
 
   });
 
@@ -1644,7 +2224,7 @@ function renderJobs() {
       <article class="listing">
 
         <span class="status">
-          CHECK CURRENT VACANCIES
+          SEARCH RESOURCE — CHECK CURRENT VACANCIES
         </span>
 
         <h3>${safeText(item.name)}</h3>
@@ -1652,22 +2232,26 @@ function renderJobs() {
         <p>${safeText(item.description)}</p>
 
         <p>
+          <strong>Search categories:</strong>
+          ${safeText(item.types)}
+        </p>
+
+        <p>
           <strong>Location:</strong>
           Search across South Africa.
         </p>
 
         <p>
-          <strong>Requirements:</strong>
-          Depend on the individual vacancy.
+          <strong>Eligibility:</strong>
+          Depends on the individual advertisement.
         </p>
 
         <p class="salary">
-          Monthly salary:
-          Check the original job advertisement.
+          Salary: Check the original job advertisement.
         </p>
 
         <a
-          href="${item.url}"
+          href="${safeOfficialUrl(item.url)}"
           target="_blank"
           rel="noopener noreferrer"
           class="btn"
@@ -1678,7 +2262,7 @@ function renderJobs() {
       </article>
 
     `).join("") ||
-    "<p>No matching resources found.</p>";
+    "<p>No matching resources found. Try another education level or search term.</p>";
 
 }
 
@@ -1691,7 +2275,7 @@ document.getElementById("jobProvince")
 /* ==========================================
    SUPABASE STUDENT ACCOUNTS
 
-   Only the public publishable key is used.
+   Public publishable key only.
    Never put a secret/service-role key here.
 ========================================== */
 
@@ -1965,10 +2549,6 @@ document.getElementById("authForm")
 
 /* ==========================================
    PRIVATE STUDENT PROFILES
-
-   Profiles are protected by Supabase RLS.
-   Each signed-in student can access only
-   their own profile.
 ========================================== */
 
 async function showStudent(user) {
@@ -2018,9 +2598,6 @@ async function showStudent(user) {
       data.province || "";
 
   } else {
-
-    // Registration metadata is used only to prefill
-    // the student's own form after authentication.
 
     const metadata = user.user_metadata || {};
 
@@ -2216,10 +2793,6 @@ async function initialiseAccounts() {
       }
     }
   );
-
-  // Listen for login and logout.
-  // Profile loading is deferred to avoid making
-  // database requests inside the auth callback.
 
   db.auth.onAuthStateChange((event,session) => {
 
