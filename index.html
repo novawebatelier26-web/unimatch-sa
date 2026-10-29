@@ -1210,6 +1210,17 @@ const jobResources = [
     province:"all",
     url:"https://www.gov.za/"
   },
+
+  /* NEW OFFICIAL LIMPOPO RECRUITMENT RESOURCE */
+  {
+    name:"Limpopo Provincial Government eRecruitment",
+    description:"Browse and apply for vacancies advertised through the official Limpopo Provincial Government recruitment portal. Explore departments including Health, Education and other provincial services. Cleaning, ward support, administration and other opportunities may be listed. Check each advert for its qualifications, reference number and closing date.",
+    levels:["no-matric","matric","graduate"],
+    types:"Limpopo government vacancies cleaner cleaning general worker ward attendant hospital healthcare administration education learnership public sector",
+    province:"Limpopo",
+    url:"https://erecruitment.limpopo.gov.za/"
+  },
+
   {
     name:"Indeed South Africa — Graduate Search",
     description:"Search graduate, junior professional and internship advertisements.",
@@ -1507,7 +1518,7 @@ function renderJobs() {
           ${safeText(item.types)}
         </p>
 
-        <p><strong>Location:</strong> Search across South Africa.</p>
+        <p><strong>Location:</strong> ${safeText(item.province === "all" ? "Search across South Africa." : item.province + " — check each vacancy for its exact location.")}</p>
         <p><strong>Eligibility:</strong> Depends on the individual advertisement.</p>
 
         <a href="${safeText(safeOfficialUrl(item.url))}"
